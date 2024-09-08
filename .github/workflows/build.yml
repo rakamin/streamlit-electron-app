@@ -1,0 +1,49 @@
+name: Build Electron App
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # Set up Python and install Streamlit requirements
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r streamlit_app/requirements.txt
+
+      # Set up Node.js and install Electron dependencies
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.x'
+
+      - name: Install Node.js dependencies
+        run: |
+          cd electron-app
+          npm install
+
+      # Build the Electron app
+      - name: Build Electron App
+        run: |
+          cd electron-app
+          npm run dist
+
+      # Upload the packaged application as an artifact
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: electron-app-${{ matrix.os }}
+          path: electron-app/dist/

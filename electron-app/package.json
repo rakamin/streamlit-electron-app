@@ -1,0 +1,24 @@
+{
+    "name": "electron-app",
+    "version": "1.0.0",
+    "main": "main.js",
+    "scripts": {
+      "start": "electron .",
+      "pack": "electron-builder --dir",
+      "dist": "electron-builder"
+    },
+    "build": {
+      "appId": "com.example.streamlitapp",
+      "mac": {
+        "target": "dmg"
+      },
+      "win": {
+        "target": "nsis"
+      }
+    },
+    "devDependencies": {
+      "electron": "^24.3.1",
+      "electron-builder": "^23.3.1"
+    }
+  }
+  
