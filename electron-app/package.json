@@ -10,10 +10,26 @@
     "build": {
       "appId": "com.example.streamlitapp",
       "mac": {
-        "target": "dmg"
+        "target": [
+          {
+            "target": "zip",
+            "arch": ["x64", "arm64", "universal"]
+          }
+        ],
+        "artifactName": "${productName}-mac-universal.${ext}"
       },
       "win": {
-        "target": "nsis"
+        "target": [
+          {
+            "target": "portable",
+            "arch": "x64"
+          }
+        ],
+        "artifactName": "${productName}-win.${ext}"
+      },
+      "linux": {
+        "target": "AppImage",
+        "artifactName": "${productName}-linux.${ext}"
       }
     },
     "devDependencies": {
